@@ -34,20 +34,16 @@
             text-transform: uppercase; margin-top: 10px;
         }
 
-        .order-card { 
-            background: white; border-radius: 20px; padding: 20px; margin-bottom: 20px; 
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05); border-left: 8px solid var(--orange); 
-        }
-        .order-id-tag { background: #333; color: white; padding: 6px 12px; border-radius: 8px; font-weight: bold; font-size: 14px; }
-        .order-total { color: var(--green); font-weight: 800; font-size: 20px; float: right; }
-        .customer-line { margin: 15px 0; font-size: 16px; color: #333; font-weight: 600; }
-        
         .product-item { display: flex; align-items: center; gap: 12px; background: #fff; padding: 10px; border-radius: 12px; margin-top: 10px; border: 1px solid #eee; }
         .product-item img { width: 45px; height: 45px; border-radius: 8px; object-fit: cover; }
 
         #editModal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 2000; align-items: center; justify-content: center; }
         #editModal.active { display: flex; }
 
+        .order-card { background: white; border-radius: 20px; padding: 20px; margin-bottom: 20px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); border-left: 8px solid var(--orange); }
+        .order-id-tag { background: #333; color: white; padding: 6px 12px; border-radius: 8px; font-weight: bold; font-size: 14px; }
+        .order-total { color: var(--green); font-weight: 800; font-size: 20px; float: right; }
+        .customer-line { margin: 15px 0; font-size: 16px; color: #333; font-weight: 600; }
         .payment-info-small { font-size: 13px; color: #555; background: #f9f9f9; padding: 10px; border-radius: 10px; margin: 10px 0; }
 
         .review-card { background: white; border-radius: 15px; padding: 15px; margin-bottom: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.03); border-left: 5px solid var(--blue); }
@@ -66,6 +62,24 @@
 </div>
 
 <div id="inventory" class="section active">
+    <div class="card" style="border: 2px solid var(--blue);">
+        <h2 style="color: var(--blue); margin-bottom: 10px;"><i class="fas fa-bullhorn"></i> Store Welcome Notice</h2>
+        <p style="font-size: 12px; color:#666; margin-top:0;">Display a graphic promo design layout when users open your shop.</p>
+        
+        <div class="input-box">
+            <span class="label-text">Notice Graphic Banner URL</span>
+            <input type="text" id="noticeImgUrl" placeholder="Paste graphic banner design URL here">
+        </div>
+        <div class="input-box">
+            <span class="label-text">Notice Visibility Status</span>
+            <select id="noticeStatus">
+                <option value="active">ON - Show to Customers</option>
+                <option value="inactive">OFF - Hide Notice</option>
+            </select>
+        </div>
+        <button class="btn-post" id="saveNoticeBtn" style="background: var(--blue);">UPDATE WELCOME NOTICE</button>
+    </div>
+
     <div class="card">
         <h2>Upload Item</h2>
         <div class="input-box"><input type="text" id="pName" placeholder="Product Name"></div>
@@ -84,41 +98,12 @@
         <div class="input-box">
             <select id="pCat">
                 <option selected disabled>Select Category</option>
-                <optgroup label="CAPS & HATS">
-                    <option>Men's Designer Caps</option>
-                    <option>Women's Fashion Caps</option>
-                    <option>Unisex Face-Caps</option>
-                </optgroup>
-                <optgroup label="MEN'S CLOTHING">
-                    <option>Men top</option>
-                    <option>Men Trouser</option>
-                    <option>Men complete dresses</option>
-                    <option>Boxers</option>
-                    <option>Singlet</option>
-                </optgroup>
-                <optgroup label="WOMEN'S CLOTHING">
-                    <option>Women Tops</option>
-                    <option>Women paint</option>
-                    <option>Bra</option>
-                    <option>Women Trouser</option>
-                </optgroup>
-                <optgroup label="FOOTWEAR">
-                    <option>Sneakers & Canvas</option>
-                    <option>Sliders & Slippers</option>
-                    <option>Women sneakers</option>
-                </optgroup>
-                <optgroup label="LIFESTYLE & KITCHEN">
-                    <option>Smart</option>
-                    <option>Water bottle</option>
-                    <option>Flask</option>
-                    <option>Cosmetics</option>
-                </optgroup>
-                <optgroup label="ACCESSORIES">
-                    <option>Wristwatches</option>
-                    <option>Neck Chains</option>
-                    <option>Unisex Belts</option>
-                    <option>Perfumes</option>
-                </optgroup>
+                <optgroup label="CAPS & HATS"><option>Men's Designer Caps</option><option>Women's Fashion Caps</option><option>Unisex Face-Caps</option></optgroup>
+                <optgroup label="MEN'S CLOTHING"><option>Men top</option><option>Men Trouser</option><option>Men complete dresses</option><option>Boxers</option><option>Singlet</option></optgroup>
+                <optgroup label="WOMEN'S CLOTHING"><option>Women Tops</option><option>Women paint</option><option>Bra</option><option>Women Trouser</option></optgroup>
+                <optgroup label="FOOTWEAR"><option>Sneakers & Canvas</option><option>Sliders & Slippers</option><option>Women sneakers</option></optgroup>
+                <optgroup label="LIFESTYLE & KITCHEN"><option>Smart</option><option>Water bottle</option><option>Flask</option><option>Cosmetics</option></optgroup>
+                <optgroup label="ACCESSORIES"><option>Wristwatches</option><option>Neck Chains</option><option>Unisex Belts</option><option>Perfumes</option></optgroup>
             </select>
         </div>
         <button class="btn-post" id="postBtn">POST TO SHOP</button>
@@ -134,41 +119,21 @@
     <div class="card" style="width: 90%; max-width: 400px; max-height: 85vh; overflow-y: auto;">
         <h3>Edit Product</h3>
         <input type="hidden" id="editId">
-        <div class="input-box">
-            <span class="label-text">Product Name</span>
-            <input type="text" id="editName">
-        </div>
-        <div class="input-box">
-            <span class="label-text">Price (₦)</span>
-            <input type="text" id="editPrice">
-        </div>
-        <div class="input-box">
-            <span class="label-text">Sizes</span>
-            <input type="text" id="editSizes">
-        </div>
-        <div class="input-box">
-            <span class="label-text">Colors</span>
-            <input type="text" id="editColors">
-        </div>
+        <div class="input-box"><span class="label-text">Product Name</span><input type="text" id="editName"></div>
+        <div class="input-box"><span class="label-text">Price (₦)</span><input type="text" id="editPrice"></div>
+        <div class="input-box"><span class="label-text">Sizes</span><input type="text" id="editSizes"></div>
+        <div class="input-box"><span class="label-text">Colors</span><input type="text" id="editColors"></div>
         <button class="btn-post" id="updateBtn" style="background: var(--blue);">SAVE CHANGES</button>
         <button class="btn-post" onclick="document.getElementById('editModal').classList.remove('active')" style="background: #ccc; margin-top: 5px;">CANCEL</button>
     </div>
 </div>
 
-<div id="orders" class="section">
-    <div id="orderList"></div>
-</div>
-
-<div id="reviews" class="section">
-    <div class="card">
-        <div style="font-weight: bold; font-size: 20px; margin-bottom: 15px;">Product Reviews</div>
-        <div id="reviewList"></div>
-    </div>
-</div>
+<div id="orders" class="section"><div id="orderList"></div></div>
+<div id="reviews" class="section"><div class="card"><div style="font-weight: bold; font-size: 20px; margin-bottom: 15px;">Product Reviews</div><div id="reviewList"></div></div></div>
 
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-    import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, doc, updateDoc, deleteDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+    import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, doc, updateDoc, deleteDoc, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
     const firebaseConfig = { 
         apiKey: "AIzaSyC1w8tUDW6XTfkPceprjj1kJed9CM5r6YA", 
@@ -178,179 +143,94 @@
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
 
-    const tabInv = document.getElementById('tab-inventory');
-    const tabOrd = document.getElementById('tab-orders');
-    const tabRev = document.getElementById('tab-reviews');
-    const secInv = document.getElementById('inventory');
-    const secOrd = document.getElementById('orders');
-    const secRev = document.getElementById('reviews');
+    // Tab Logic Layout Control
+    const tabInv = document.getElementById('tab-inventory'); const tabOrd = document.getElementById('tab-orders'); const tabRev = document.getElementById('tab-reviews');
+    const secInv = document.getElementById('inventory'); const secOrd = document.getElementById('orders'); const secRev = document.getElementById('reviews');
 
-    tabInv.addEventListener('click', () => {
-        tabInv.classList.add('active'); tabOrd.classList.remove('active'); tabRev.classList.remove('active');
-        secInv.classList.add('active'); secOrd.classList.remove('active'); secRev.classList.remove('active');
+    tabInv.addEventListener('click', () => { tabInv.classList.add('active'); tabOrd.classList.remove('active'); tabRev.classList.remove('active'); secInv.classList.add('active'); secOrd.classList.remove('active'); secRev.classList.remove('active'); });
+    tabOrd.addEventListener('click', () => { tabOrd.classList.add('active'); tabInv.classList.remove('active'); tabRev.classList.remove('active'); secOrd.classList.add('active'); secInv.classList.remove('active'); secRev.classList.remove('active'); });
+    tabRev.addEventListener('click', () => { tabRev.classList.add('active'); tabInv.classList.remove('active'); tabOrd.classList.remove('active'); secRev.classList.add('active'); secInv.classList.remove('active'); secOrd.classList.remove('active'); });
+
+    // Live Read/Load Welcome Announcement Setup inside dashboard 
+    onSnapshot(doc(db, "announcements", "welcome_banner"), (docSnap) => {
+        if(docSnap.exists()){
+            const data = docSnap.data();
+            document.getElementById('noticeImgUrl').value = data.imageUrl || "";
+            document.getElementById('noticeStatus').value = data.status || "inactive";
+        }
     });
 
-    tabOrd.addEventListener('click', () => {
-        tabOrd.classList.add('active'); tabInv.classList.remove('active'); tabRev.classList.remove('active');
-        secOrd.classList.add('active'); secInv.classList.remove('active'); secRev.classList.remove('active');
-    });
+    // Save/Update Welcome Notice Function
+    document.getElementById('saveNoticeBtn').onclick = async () => {
+        const imageUrl = document.getElementById('noticeImgUrl').value.trim();
+        const status = document.getElementById('noticeStatus').value;
+        
+        try {
+            await setDoc(doc(db, "announcements", "welcome_banner"), {
+                imageUrl: imageUrl,
+                status: status,
+                timestamp: serverTimestamp()
+            });
+            alert("Welcome banner announcement status updated successfully!");
+        } catch(error) {
+            alert("Error saving notice config context settings.");
+        }
+    };
 
-    tabRev.addEventListener('click', () => {
-        tabRev.classList.add('active'); tabInv.classList.remove('active'); tabOrd.classList.remove('active');
-        secRev.classList.add('active'); secInv.classList.remove('active'); secOrd.classList.remove('active');
-    });
-
+    // Item Registration logic
     document.getElementById('postBtn').addEventListener('click', async () => {
-        const name = document.getElementById('pName').value;
-        const rawPrice = document.getElementById('pPrice').value;
-        const img1 = document.getElementById('pImg1').value;
-        const img2 = document.getElementById('pImg2').value;
-        const img3 = document.getElementById('pImg3').value;
-        const img4 = document.getElementById('pImg4').value;
-        const cat = document.getElementById('pCat').value;
-        const sizes = document.getElementById('pSizes').value;
-        const colors = document.getElementById('pColors').value;
+        const name = document.getElementById('pName').value; const rawPrice = document.getElementById('pPrice').value;
+        const img1 = document.getElementById('pImg1').value; const img2 = document.getElementById('pImg2').value;
+        const img3 = document.getElementById('pImg3').value; const img4 = document.getElementById('pImg4').value;
+        const cat = document.getElementById('pCat').value; const sizes = document.getElementById('pSizes').value; const colors = document.getElementById('pColors').value;
         
         if(!name || !rawPrice || !img1 || !cat) return alert("Fill all fields! (Main Image 1 is required)");
-
         const cleanPrice = Number(rawPrice.replace(/,/g, ''));
         if(isNaN(cleanPrice)) return alert("Please enter a valid price amount!");
-
-        // Pack images into an array, filtering out empty inputs
         const imagesArr = [img1, img2, img3, img4].filter(url => url.trim() !== "");
 
-        await addDoc(collection(db, "products"), { 
-            name, 
-            price: cleanPrice, 
-            image: img1, // keeping this for old compatibility
-            images: imagesArr, // array of all uploaded pics
-            category: cat, 
-            sizes: sizes || "N/A", 
-            colors: colors || "N/A", 
-            timestamp: serverTimestamp() 
-        });
+        await addDoc(collection(db, "products"), { name, price: cleanPrice, image: img1, images: imagesArr, category: cat, sizes: sizes || "N/A", colors: colors || "N/A", timestamp: serverTimestamp() });
         alert("Live!");
         document.querySelectorAll('#inventory input').forEach(i => i.value = "");
     });
 
+    // Stream and Manage inventory engine loop mapping
     onSnapshot(query(collection(db, "products"), orderBy("timestamp", "desc")), (snap) => {
         document.getElementById('manageItemsList').innerHTML = snap.docs.map(doc => {
-            const item = doc.data();
-            const coverImg = item.images && item.images.length > 0 ? item.images[0] : item.image;
-            return `
-                <div class="product-item">
-                    <img src="${coverImg}">
-                    <div style="flex:1">
-                        <b>${item.name}</b><br>
-                        <small>₦${Number(item.price).toLocaleString()}</small><br>
-                        <small style="color:#777">Pics: ${item.images ? item.images.length : 1} | Size: ${item.sizes || 'N/A'}</small>
-                    </div>
+            const item = doc.data(); const coverImg = item.images && item.images.length > 0 ? item.images[0] : item.image;
+            return `<div class="product-item"><img src="${coverImg}"><div style="flex:1"><b>${item.name}</b><br><small>₦${Number(item.price).toLocaleString()}</small></div>
                     <button class="edit-trigger" data-id="${doc.id}" data-name="${item.name}" data-price="${item.price}" data-sizes="${item.sizes || ''}" data-colors="${item.colors || ''}" style="background:var(--blue); color:white; border:none; padding:8px; border-radius:8px; cursor:pointer;"><i class="fas fa-edit"></i></button>
-                    <button class="delete-trigger" data-id="${doc.id}" style="background:var(--red); color:white; border:none; padding:8px; border-radius:8px; margin-left:5px; cursor:pointer;"><i class="fas fa-trash"></i></button>
-                </div>`;
+                    <button class="delete-trigger" data-id="${doc.id}" style="background:var(--red); color:white; border:none; padding:8px; border-radius:8px; margin-left:5px; cursor:pointer;"><i class="fas fa-trash"></i></button></div>`;
         }).join('');
-
-        document.querySelectorAll('.delete-trigger').forEach(btn => {
-            btn.onclick = async () => { if(confirm("Delete this item?")) await deleteDoc(doc(db, "products", btn.dataset.id)); };
-        });
-
-        document.querySelectorAll('.edit-trigger').forEach(btn => {
-            btn.onclick = () => {
-                document.getElementById('editId').value = btn.dataset.id;
-                document.getElementById('editName').value = btn.dataset.name;
-                document.getElementById('editPrice').value = Number(btn.dataset.price).toLocaleString();
-                document.getElementById('editSizes').value = btn.dataset.sizes;
-                document.getElementById('editColors').value = btn.dataset.colors;
-                document.getElementById('editModal').classList.add('active');
-            };
-        });
+        document.querySelectorAll('.delete-trigger').forEach(btn => { btn.onclick = async () => { if(confirm("Delete this item?")) await deleteDoc(doc(db, "products", btn.dataset.id)); }; });
+        document.querySelectorAll('.edit-trigger').forEach(btn => { btn.onclick = () => { document.getElementById('editId').value = btn.dataset.id; document.getElementById('editName').value = btn.dataset.name; document.getElementById('editPrice').value = Number(btn.dataset.price).toLocaleString(); document.getElementById('editSizes').value = btn.dataset.sizes; document.getElementById('editColors').value = btn.dataset.colors; document.getElementById('editModal').classList.add('active'); }; });
     });
 
     document.getElementById('updateBtn').onclick = async () => {
-        const id = document.getElementById('editId').value;
-        const name = document.getElementById('editName').value;
-        const rawPrice = document.getElementById('editPrice').value;
-        const sizes = document.getElementById('editSizes').value;
-        const colors = document.getElementById('editColors').value;
-        
+        const id = document.getElementById('editId').value; const name = document.getElementById('editName').value; const rawPrice = document.getElementById('editPrice').value; const sizes = document.getElementById('editSizes').value; const colors = document.getElementById('editColors').value;
         const cleanPrice = Number(rawPrice.replace(/,/g, ''));
-        if(isNaN(cleanPrice)) return alert("Please enter a valid price amount!");
-
-        await updateDoc(doc(db, "products", id), { 
-            name: name, 
-            price: cleanPrice,
-            sizes: sizes,
-            colors: colors
-        });
-        alert("Product updated!");
-        document.getElementById('editModal').classList.remove('active');
+        await updateDoc(doc(db, "products", id), { name, price: cleanPrice, sizes, colors });
+        alert("Product updated!"); document.getElementById('editModal').classList.remove('active');
     };
 
     onSnapshot(query(collection(db, "orders"), orderBy("timestamp", "desc")), (snap) => {
         document.getElementById('orderList').innerHTML = snap.docs.map(oDoc => {
             const o = oDoc.data();
-            return `
-                <div class="order-card">
-                    <div style="display:flex; justify-content:space-between; align-items:center;">
-                        <div>
-                            <span class="order-id-tag">${o.orderId}</span>
-                            <button class="delete-order-btn" data-id="${oDoc.id}" style="background:var(--red); color:white; border:none; padding:6px 10px; border-radius:8px; margin-left:10px; cursor:pointer;"><i class="fas fa-trash"></i></button>
-                        </div>
-                        <span class="order-total">₦${Number(o.total).toLocaleString()}</span>
-                    </div>
-                    <div class="customer-line">Customer: ${o.customerName} (${o.phone})</div>
-                    <div class="payment-info-small"><b>Method:</b> ${o.paymentMethod || 'Not set'} | <b>Ref:</b> ${o.transactionRef || 'N/A'}</div>
-                    <div class="input-box"><span class="label-text">Delivery Address</span><input type="text" value="${o.address}" readonly></div>
-                    <div class="input-box"><span class="label-text">Set Delivery Date</span><input type="date" class="date-input" data-id="${oDoc.id}" value="${o.deliveryDate || ''}"></div>
-                    <div class="input-box">
-                        <span class="label-text">Order Status</span>
-                        <select class="status-select" data-id="${oDoc.id}">
-                            <option ${o.status === 'Pending' ? 'selected' : ''}>Pending</option>
-                            <option ${o.status === 'Shipped' ? 'selected' : ''}>Shipped</option>
-                            <option ${o.status === 'Delivered' ? 'selected' : ''}>Delivered</option>
-                        </select>
-                    </div>
-                    <button class="save-trigger" data-id="${oDoc.id}" style="background:var(--green); color:white; border:none; padding:15px; width:100%; border-radius:12px; font-weight:bold; margin-top:10px; cursor:pointer;">SAVE UPDATES</button>
-                </div>`;
+            return `<div class="order-card"><div style="display:flex; justify-content:space-between; align-items:center;"><div><span class="order-id-tag">${o.orderId}</span><button class="delete-order-btn" data-id="${oDoc.id}" style="background:var(--red); color:white; border:none; padding:6px 10px; border-radius:8px; margin-left:10px; cursor:pointer;"><i class="fas fa-trash"></i></button></div><span class="order-total">₦${Number(o.total).toLocaleString()}</span></div><div class="customer-line">Customer: ${o.customerName} (${o.phone})</div>
+                    <div class="payment-info-small"><b>Method:</b> ${o.paymentMethod || 'Not set'} | <b>Ref:</b> ${o.transactionRef || 'N/A'}</div><div class="input-box"><span class="label-text">Delivery Address</span><input type="text" value="${o.address}" readonly></div><div class="input-box"><span class="label-text">Set Delivery Date</span><input type="date" class="date-input" data-id="${oDoc.id}" value="${o.deliveryDate || ''}"></div>
+                    <div class="input-box"><span class="label-text">Order Status</span><select class="status-select" data-id="${oDoc.id}"><option ${o.status === 'Pending' ? 'selected' : ''}>Pending</option><option ${o.status === 'Shipped' ? 'selected' : ''}>Shipped</option><option ${o.status === 'Delivered' ? 'selected' : ''}>Delivered</option></select></div><button class="save-trigger" data-id="${oDoc.id}" style="background:var(--green); color:white; border:none; padding:15px; width:100%; border-radius:12px; font-weight:bold; margin-top:10px; cursor:pointer;">SAVE UPDATES</button></div>`;
         }).join('');
-
-        document.querySelectorAll('.save-trigger').forEach(btn => {
-            btn.onclick = async () => {
-                const id = btn.dataset.id;
-                const status = document.querySelector(`.status-select[data-id="${id}"]`).value;
-                const date = document.querySelector(`.date-input[data-id="${id}"]`).value;
-                await updateDoc(doc(db, "orders", id), { status: status, deliveryDate: date });
-                alert("Order updated!");
-            };
-        });
+        document.querySelectorAll('.save-trigger').forEach(btn => { btn.onclick = async () => { const id = btn.dataset.id; const status = document.querySelector(`.status-select[data-id="${id}"]`).value; const date = document.querySelector(`.date-input[data-id="${id}"]`).value; await updateDoc(doc(db, "orders", id), { status, deliveryDate: date }); alert("Order updated!"); }; });
+        document.querySelectorAll('.delete-order-btn').forEach(btn => { btn.onclick = async () => { if(confirm("Permanently delete this order from records?")) await deleteDoc(doc(db, "orders", btn.dataset.id)); }; });
     });
 
     onSnapshot(query(collection(db, "reviews"), orderBy("timestamp", "desc")), (snap) => {
-        if(snap.empty) {
-            document.getElementById('reviewList').innerHTML = `<p style="color:#888; text-align:center;">No reviews submitted yet.</p>`;
-            return;
-        }
+        if(snap.empty) { document.getElementById('reviewList').innerHTML = `<p style="color:#888; text-align:center;">No reviews submitted yet.</p>`; return; }
         document.getElementById('reviewList').innerHTML = snap.docs.map(rDoc => {
-            const r = rDoc.data();
-            let starsStr = '';
-            for(let i=0; i<5; i++) { starsStr += i < r.rating ? '<i class="fas fa-star"></i>' : '<i class="far fa-star"></i>'; }
-            return `
-                <div class="review-card">
-                    <div style="display:flex; justify-content:space-between; align-items:flex-start;">
-                        <span class="review-product"><i class="fas fa-shopping-bag"></i> ${r.productName}</span>
-                        <button class="delete-review-btn" data-id="${rDoc.id}" style="background:transparent; color:var(--red); border:none; cursor:pointer; font-size:16px;"><i class="fas fa-trash-alt"></i></button>
-                    </div>
-                    <div class="review-stars">${starsStr}</div>
-                    <div class="review-text">"${r.comment}"</div>
-                    <div class="review-author">— By ${r.customerName}</div>
-                </div>`;
+            const r = rDoc.data(); let starsStr = ''; for(let i=0; i<5; i++) { starsStr += i < r.rating ? '<i class="fas fa-star"></i>' : '<i class="far fa-star"></i>'; }
+            return `<div class="review-card"><div style="display:flex; justify-content:space-between; align-items:flex-start;"><span class="review-product"><i class="fas fa-shopping-bag"></i> ${r.productName}</span><button class="delete-review-btn" data-id="${rDoc.id}" style="background:transparent; color:var(--red); border:none; cursor:pointer; font-size:16px;"><i class="fas fa-trash-alt"></i></button></div><div class="review-stars">${starsStr}</div><div class="review-text">"${r.comment}"</div><div class="review-author">— By ${r.customerName}</div></div>`;
         }).join('');
-
-        document.querySelectorAll('.delete-review-btn').forEach(btn => {
-            btn.onclick = async () => {
-                if(confirm("Delete this review from your store?")) await deleteDoc(doc(db, "reviews", btn.dataset.id));
-            };
-        });
+        document.querySelectorAll('.delete-review-btn').forEach(btn => { btn.onclick = async () => { if(confirm("Delete this review from your store?")) await deleteDoc(doc(db, "reviews", btn.dataset.id)); }; });
     });
 </script>
 </body>
